@@ -1,21 +1,22 @@
 ﻿using System;
 using System.IO;
+using FoodStorage.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodStorage.Models
 {
-    public abstract class EntityFrameworkBase<T> : DbContext where T : class
+    public class EFDataContext : DbContext
     {
-        private const string databaseName = "dbData.db";
+        private const string databaseName = "dbEFData.db";
 
         #region Constructors
 
-        protected EntityFrameworkBase()
+        public EFDataContext()
         {
             Init();
         }
 
-        protected EntityFrameworkBase(DbContextOptions<EntityFrameworkBase<T>> options = null)
+        public EFDataContext(DbContextOptions options)
             : base(options)
         {
             Init();
@@ -25,7 +26,7 @@ namespace FoodStorage.Models
 
         #region Public Propeties
 
-        public DbSet<T> Table { get; set; }
+        public DbSet<Pack> Packs { get; set; }
 
         #endregion
 
@@ -34,7 +35,8 @@ namespace FoodStorage.Models
         public override void Dispose()
         {
             base.Dispose();
-            Table = null;
+
+            Packs = null;
         }
 
         #endregion
@@ -54,7 +56,7 @@ namespace FoodStorage.Models
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                var databasePath = Path.Combine("data", databaseName);
+                var databasePath = Path.Combine(Directory.GetCurrentDirectory(), databaseName);
 
                 // Specify that we will use sqlite and the path of the database here
                 optionsBuilder.UseSqlite($"Filename={databasePath}");
