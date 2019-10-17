@@ -27,6 +27,7 @@ namespace FoodStorage.Entities
             result &= (Id == item.Id);
             result &= (Name.Equals(item.Name));
             result &= (TotalItems == item.TotalItems);
+            result &= (RemainigItems == item.RemainigItems);
             return result;
         }
     }

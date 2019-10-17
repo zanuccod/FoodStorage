@@ -39,7 +39,8 @@ namespace FoodStorageTest.Models
         public void GetAllPacks()
         {
             // Arrange
-            for (var i = 0; i < 10; i++)
+            var itemCount = 10;
+            for (var i = 0; i < itemCount; i++)
             {
                 dataModel.InsertPack(new Pack()
                 {
@@ -53,7 +54,7 @@ namespace FoodStorageTest.Models
             var items = dataModel.GetAllPacks();
 
             // Assert
-            Assert.AreEqual(10, items.Count);
+            Assert.AreEqual(itemCount, items.Count);
         }
 
         [Test]
@@ -74,17 +75,18 @@ namespace FoodStorageTest.Models
         public void UpdatePack()
         {
             // Arrange
-            var item = new Pack() { Name = "tomatoes", TotalItems = 6, RemainigItems = 6 };
+            var newName = "beer";
+            var item = new Pack() { Name = "tomatoes" };
             dataModel.InsertPack(item);
 
             // Act
-            item.RemainigItems--;
+            item.Name = newName;
             dataModel.UpdatePack(item);
 
             var item2 = dataModel.GetPack(item.Id);
 
             // Assert
-            Assert.AreEqual(5, item2.RemainigItems);
+            Assert.AreEqual(newName, item2.Name);
         }
 
         [Test]
