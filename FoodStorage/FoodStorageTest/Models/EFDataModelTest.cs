@@ -10,15 +10,14 @@ namespace FoodStorageTest.Models
     [TestFixture]
     public class EFDataModelTest
     {
-        private DbContextOptions options;
         private EFDataModel dataModel;
 
         [SetUp]
         public void BeforeEachTest()
         {
-            options = new DbContextOptionsBuilder()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
+            var options = new DbContextOptionsBuilder()
+                            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                            .Options;
             dataModel = new EFDataModel(options);
         }
 
