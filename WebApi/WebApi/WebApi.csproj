@@ -12,4 +12,7 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="data\dbEFData.db" />
+  </ItemGroup>
 </Project>

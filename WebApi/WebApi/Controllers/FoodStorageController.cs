@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using FoodStorage.Entities;
-using FoodStorage.Models;
 using FoodStorage.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +7,7 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FoodStorageController : ControllerBase
+    public class FoodStorageController : Controller
     {
         private readonly IPackService packService;
 
@@ -18,10 +16,34 @@ namespace WebApi.Controllers
             this.packService = packService;
         }
 
-        [HttpGet("GetAllPack")]
-        public List<Pack> Get()
+        [HttpGet("GetPackList")]
+        public JsonResult GetPackList()
         {
-            return packService.GetPackList();
+            return Json(packService.GetPackList());
+        }
+
+        [HttpGet("Get/{id}")]
+        public JsonResult GetPack(long id)
+        {
+            return Json(packService.GetPack(id));
+        }
+
+        [HttpPost("AddPack")]
+        public void AddPack(Pack pack)
+        {
+            packService.AddPack(pack);
+        }
+
+        [HttpPut("RemoveItem/{id}")]
+        public void RemoveItemFromPack(long id)
+        {
+            packService.RemoveItemFromPack(id);
+        }
+
+        [HttpGet("IsComplete/{id}")]
+        public JsonResult IsCompletePack(long id)
+        {
+            return Json(packService.IsPackComplete(id));
         }
     }
 }

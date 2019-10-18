@@ -56,10 +56,12 @@ namespace FoodStorage.Models
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                var databasePath = Path.Combine(Directory.GetCurrentDirectory(), databaseName);
+                // create data directory to store database file if not exist
+                var dataDirPath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+                Directory.CreateDirectory(dataDirPath);
 
                 // Specify that we will use sqlite and the path of the database here
-                optionsBuilder.UseSqlite($"Filename={databasePath}");
+                optionsBuilder.UseSqlite($"Filename={Path.Combine(dataDirPath, databaseName)}");
             }
         }
 
