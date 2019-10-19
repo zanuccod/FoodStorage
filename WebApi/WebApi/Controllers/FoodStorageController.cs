@@ -40,14 +40,14 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("RemoveItemFromPack/{id}")]
-        public void RemoveItemFromPack(long id)
+        public ActionResult RemoveItemFromPack(long id)
         {
-
             packService.RemoveItemFromPack(id);
+            return Accepted();
         }
 
         [HttpGet("IsComplete/{id}")]
-        public JsonResult IsCompletePack(long id)
+        public ActionResult<JsonResult> IsCompletePack(long id)
         {
             return Json(packService.IsPackComplete(id));
         }
