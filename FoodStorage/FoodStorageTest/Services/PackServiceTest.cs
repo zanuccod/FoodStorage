@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FoodStorage.Entities;
 using FoodStorage.Models;
 using FoodStorage.Services;
@@ -25,7 +26,7 @@ namespace FoodStorageTest.Services
 
         [TestCase(6, 6, true)]
         [TestCase(6, 5, false)]
-        public void IsPackCompleteTest(int totalItems, int remainingItems, bool expectedResult)
+        public async Task IsPackCompleteTest(int totalItems, int remainingItems, bool expectedResult)
         {
             // Arrange
             var item = new Pack()
@@ -33,17 +34,17 @@ namespace FoodStorageTest.Services
                 TotalItems = totalItems,
                 RemainigItems = remainingItems
             };
-            service.AddPack(item);
+            await service.AddPack(item);
 
             // Act
-            var result = service.IsPackComplete(item);
+            var result = await service.IsPackComplete(item);
 
             // Assert
             Assert.AreEqual(expectedResult, result);
         }
 
         [Test]
-        public void RemoveItemFromPackTest_MoreItemsToRemove_ShouldDecrementRemainigsItems()
+        public async Task RemoveItemFromPackTest_MoreItemsToRemove_ShouldDecrementRemainigsItems()
         {
             // Arrange
             var item = new Pack()
@@ -51,17 +52,17 @@ namespace FoodStorageTest.Services
                 TotalItems = 6,
                 RemainigItems = 2
             };
-            service.AddPack(item);
+            await service.AddPack(item);
 
             // Act
-            service.RemoveItemFromPack(item);
+            await service.RemoveItemFromPack(item);
 
             // Assert
-            Assert.AreEqual(1, service.GetPack(item.Id).RemainigItems);
+            Assert.AreEqual(1, service.GetPack(item.Id).Result.RemainigItems);
         }
 
         [Test]
-        public void RemoveItemFromPackTest_OneItemToRemove_ShouldRemovePack()
+        public async Task RemoveItemFromPackTest_OneItemToRemove_ShouldRemovePack()
         {
             // Arrange
             var item = new Pack()
@@ -69,13 +70,13 @@ namespace FoodStorageTest.Services
                 TotalItems = 6,
                 RemainigItems = 1
             };
-            service.AddPack(item);
+            await service.AddPack(item);
 
             // Act
-            service.RemoveItemFromPack(item);
+            await service.RemoveItemFromPack(item);
 
             // Assert
-            Assert.Null(service.GetPack(item.Id));
+            Assert.Null(service.GetPack(item.Id).Result);
         }
     }
 }

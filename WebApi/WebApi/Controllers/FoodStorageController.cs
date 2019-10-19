@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FoodStorage.Entities;
 using FoodStorage.Models;
 using FoodStorage.Services;
@@ -20,15 +21,15 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("GetPackList")]
-        public ActionResult<List<Pack>> GetPackList()
+        public async Task<ActionResult<List<Pack>>> GetPackList()
         {
-            return packService.GetPackList();
+            return await packService.GetPackList();
         }
 
         [HttpGet("Get/{id}")]
-        public ActionResult<Pack> GetPack(long id)
+        public async Task<ActionResult<Pack>> GetPack(long id)
         {
-            var item = packService.GetPack(id);
+            var item = await packService.GetPack(id);
             if (item != null)
                 return item;
 
@@ -36,43 +37,43 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("IsComplete/{id}")]
-        public ActionResult<bool> IsCompletePack(long id)
+        public async Task<ActionResult<bool>> IsCompletePack(long id)
         {
-            var pack = packService.GetPack(id);
+            var pack = await packService.GetPack(id);
             if (pack != null)
-                return packService.IsPackComplete(pack);
+                return await packService.IsPackComplete(pack);
 
             return NotFound(id);
         }
 
         [HttpPut("UpdatePack/{id}")]
-        public ActionResult UpdatePack(long id, Pack pack)
+        public async Task<ActionResult> UpdatePack(long id, Pack pack)
         {
-            var item = packService.GetPack(id);
+            var item = await packService.GetPack(id);
             if (item != null)
             {
-                packService.UpdatePack(id, pack);
+                await packService.UpdatePack(id, pack);
                 return Ok(id);
             }
             return NotFound(id);
         }
 
         [HttpPost("RemovePack/{id}")]
-        public ActionResult RemovePack(long id)
+        public async Task<ActionResult> RemovePack(long id)
         {
-            var pack = packService.GetPack(id);
+            var pack = await packService.GetPack(id);
             if (pack != null)
             {
-                packService.DeletePack(id);
+                await packService.DeletePack(id);
                 return CreatedAtAction(nameof(RemovePack), new { id }, pack);
             }
             return NotFound(id);
         }
 
         [HttpPost("AddPack")]
-        public ActionResult AddPack(Pack pack)
+        public async Task<ActionResult> AddPack(Pack pack)
         {
-            packService.AddPack(pack);
+            await packService.AddPack(pack);
             return CreatedAtAction(nameof(AddPack), new { id = pack.Id }, pack);
         }
 
@@ -83,12 +84,12 @@ namespace WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost("RemoveItemFromPack/{id}")]
-        public ActionResult<Pack> RemoveItemFromPack(long id)
+        public async Task<ActionResult<Pack>> RemoveItemFromPack(long id)
         {
-            var pack = packService.GetPack(id);
+            var pack = await packService.GetPack(id);
             if (pack != null)
             {
-                pack = packService.RemoveItemFromPack(pack);
+                pack = await packService.RemoveItemFromPack(pack);
                 return CreatedAtAction(nameof(RemoveItemFromPack), new { id }, pack);
             }
             return NotFound(id);

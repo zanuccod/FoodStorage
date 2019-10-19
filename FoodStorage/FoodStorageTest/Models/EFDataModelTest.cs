@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using FoodStorage.Entities;
 using FoodStorage.Models;
+using System.Threading.Tasks;
 
 namespace FoodStorageTest.Models
 {
@@ -22,26 +23,26 @@ namespace FoodStorageTest.Models
         }
 
         [Test]
-        public void InsertPack()
+        public async Task InsertPack()
         {
             // Arrange
             var item = new Pack() { Name = "tomatoes", TotalItems = 6, RemainigItems = 6 };
 
             // Act
-            dataModel.InsertPack(item);
+            await dataModel.InsertPack(item);
 
             // Assert
-            Assert.AreEqual(1, dataModel.GetPackList().Count);
+            Assert.AreEqual(1, dataModel.GetPackList().Result.Count);
         }
 
         [Test]
-        public void GetAllPacks()
+        public async Task GetAllPacks()
         {
             // Arrange
             var itemCount = 10;
             for (var i = 0; i < itemCount; i++)
             {
-                dataModel.InsertPack(new Pack()
+                await dataModel.InsertPack(new Pack()
                 {
                     Name = $"tomatoes_{i}",
                     TotalItems = i,
@@ -50,56 +51,56 @@ namespace FoodStorageTest.Models
             }
 
             // Act
-            var items = dataModel.GetPackList();
+            var items = await dataModel.GetPackList();
 
             // Assert
             Assert.AreEqual(itemCount, items.Count);
         }
 
         [Test]
-        public void GetPack()
+        public async Task GetPack()
         {
             // Arrange
             var item = new Pack() { Name = "tomatoes", TotalItems = 6, RemainigItems = 6 };
-            dataModel.InsertPack(item);
+            await dataModel.InsertPack(item);
 
             // Act
-            var item2 = dataModel.GetPack(item.Id);
+            var item2 = await dataModel.GetPack(item.Id);
 
             // Assert
             Assert.True(item.Equals(item2));
         }
 
         [Test]
-        public void UpdatePack()
+        public async Task UpdatePack()
         {
             // Arrange
             var newName = "beer";
             var item = new Pack() { Name = "tomatoes" };
-            dataModel.InsertPack(item);
+            await dataModel.InsertPack(item);
 
             // Act
             item.Name = newName;
-            dataModel.UpdatePack(item);
+            await dataModel.UpdatePack(item);
 
-            var item2 = dataModel.GetPack(item.Id);
+            var item2 = await dataModel.GetPack(item.Id);
 
             // Assert
             Assert.AreEqual(newName, item2.Name);
         }
 
         [Test]
-        public void DeletePack()
+        public async Task DeletePack()
         {
             // Arrange
             var item = new Pack() { Name = "tomatoes", TotalItems = 6, RemainigItems = 6 };
-            dataModel.InsertPack(item);
+            await dataModel.InsertPack(item);
 
             // Act
-            dataModel.DeletePack(item.Id);
+            await dataModel.DeletePack(item.Id);
 
             // Assert
-            Assert.AreEqual(0, dataModel.GetPackList().Count);
+            Assert.AreEqual(0, dataModel.GetPackList().Result.Count);
         }
     }
 }

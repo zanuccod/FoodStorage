@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using FoodStorage.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace FoodStorage.Models
 {
@@ -25,38 +26,38 @@ namespace FoodStorage.Models
 
         #region Public Pack Methods
 
-        public List<Pack> GetPackList()
+        public async Task<List<Pack>> GetPackList()
         {
             using var db = new EFDataContext(options);
-            return db.Packs.ToList();
+            return await db.Packs.ToListAsync();
         }
 
-        public Pack GetPack(long id)
+        public async Task<Pack> GetPack(long id)
         {
             using var db = new EFDataContext(options);
-            return db.Packs.Find(id);
+            return await db.Packs.FindAsync(id);
         }
 
-        public void InsertPack(Pack obj)
+        public async Task InsertPack(Pack obj)
         {
             using var db = new EFDataContext(options);
-            db.Packs.Add(obj);
+            await db.Packs.AddAsync(obj);
+            await db.SaveChangesAsync();
+        }
+
+        public async Task UpdatePack(Pack obj)
+        {
+            using var db = new EFDataContext(options);
+            await Task.FromResult(db.Packs.Update(obj));
             db.SaveChanges();
         }
 
-        public void UpdatePack(Pack obj)
+        public async Task DeletePack(long id)
         {
             using var db = new EFDataContext(options);
-            db.Packs.Update(obj);
-            db.SaveChanges();
-        }
-
-        public void DeletePack(long id)
-        {
-            using var db = new EFDataContext(options);
-            var item = db.Packs.Find(id);
+            var item = await db.Packs.FindAsync(id);
             db.Packs.Remove(item);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         #endregion

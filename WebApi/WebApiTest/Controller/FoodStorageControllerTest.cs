@@ -5,6 +5,7 @@ using Moq;
 using FoodStorage.Services;
 using FoodStorage.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WebApiTest.Controller
 {
@@ -15,7 +16,7 @@ namespace WebApiTest.Controller
         private FoodStorageController controller;
 
         [Fact]
-        public void GetPack_PackNotFound_ShouldReturnNotFound()
+        public async Task GetPack_PackNotFound_ShouldReturnNotFound()
         {
             // Arrange
             mockPackService = new Mock<IPackService>();
@@ -23,17 +24,17 @@ namespace WebApiTest.Controller
             controller = new FoodStorageController(service);
 
             var packId = 1;
-            mockPackService.Setup(x => x.GetPack(packId)).Returns<Pack>(null);
+            mockPackService.Setup(x => x.GetPack(packId)).Returns(Task.FromResult<Pack>(null));
 
             // Act
-            var result = controller.GetPack(packId);
+            var result = await controller.GetPack(packId);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);
         }
 
         [Fact]
-        public void GetPack_PackFound_ShouldReturnPack()
+        public async Task GetPack_PackFound_ShouldReturnPack()
         {
             // Arrange
             mockPackService = new Mock<IPackService>();
@@ -41,10 +42,10 @@ namespace WebApiTest.Controller
             controller = new FoodStorageController(service);
 
             var packId = 1;
-            mockPackService.Setup(x => x.GetPack(packId)).Returns(new Pack() { Id = 1 });
+            mockPackService.Setup(x => x.GetPack(packId)).Returns(Task.FromResult(new Pack() { Id = 1 }));
 
             // Act
-            var result = controller.GetPack(packId);
+            var result = await controller.GetPack(packId);
 
             // Assert
             Assert.IsType<Pack>(result.Value);

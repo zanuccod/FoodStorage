@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FoodStorage.Entities;
 using FoodStorage.Models;
 
@@ -14,46 +15,46 @@ namespace FoodStorage.Services
             this.model = model;
         }
 
-        public void AddPack(Pack pack)
+        public async Task AddPack(Pack pack)
         {
-            model.InsertPack(pack);
+            await model.InsertPack(pack);
         }
 
-        public void DeletePack(long packId)
+        public async Task DeletePack(long packId)
         {
-            model.DeletePack(packId);
+            await model.DeletePack(packId);
         }
 
-        public void UpdatePack(long packId, Pack pack)
+        public async Task UpdatePack(long packId, Pack pack)
         {
             pack.Id = packId;
-            model.UpdatePack(pack);
+            await model.UpdatePack(pack);
         }
 
-        public Pack GetPack(long packId)
+        public Task<Pack> GetPack(long packId)
         {
             return model.GetPack(packId);
         }
 
-        public List<Pack> GetPackList()
+        public Task<List<Pack>> GetPackList()
         {
             return model.GetPackList();
         }
 
-        public bool IsPackComplete(Pack pack)
+        public async Task<bool> IsPackComplete(Pack pack)
         {
-            return pack.IsComplete();
+            return await Task.FromResult(pack.IsComplete());
         }
 
-        public Pack RemoveItemFromPack(Pack pack)
+        public async Task<Pack> RemoveItemFromPack(Pack pack)
         {
             if (pack.RemainigItems > 1)
             {
                 pack.RemainigItems--;
-                model.UpdatePack(pack);
+                await model.UpdatePack(pack);
                 return pack;
             }
-            model.DeletePack(pack.Id);
+            await model.DeletePack(pack.Id);
             return null;
         }
     }
