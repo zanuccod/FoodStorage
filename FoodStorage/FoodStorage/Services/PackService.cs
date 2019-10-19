@@ -38,14 +38,17 @@ namespace FoodStorage.Services
         public void RemoveItemFromPack(long packId)
         {
             var pack = model.GetPack(packId);
-            if (pack.RemainigItems > 1)
+            if (pack != null)
             {
-                pack.RemainigItems--;
-                model.UpdatePack(pack);
-            }
-            else
-            {
-                model.DeletePack(pack.Id);
+                if (pack.RemainigItems > 1)
+                {
+                    pack.RemainigItems--;
+                    model.UpdatePack(pack);
+                }
+                else
+                {
+                    model.DeletePack(pack.Id);
+                }
             }
         }
     }

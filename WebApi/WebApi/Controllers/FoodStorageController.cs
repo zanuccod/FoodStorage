@@ -17,26 +17,32 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("GetPackList")]
-        public JsonResult GetPackList()
+        public ActionResult<JsonResult> GetPackList()
         {
             return Json(packService.GetPackList());
         }
 
         [HttpGet("Get/{id}")]
-        public JsonResult GetPack(long id)
+        public ActionResult<JsonResult> GetPack(long id)
         {
-            return Json(packService.GetPack(id));
+            var item = packService.GetPack(id);
+            if (item != null)
+                return Json(item);
+
+            return NotFound();
         }
 
         [HttpPost("AddPack")]
-        public void AddPack(Pack pack)
+        public ActionResult AddPack(Pack pack)
         {
             packService.AddPack(pack);
+            return Accepted();
         }
 
-        [HttpPut("RemoveItem/{id}")]
+        [HttpPut("RemoveItemFromPack/{id}")]
         public void RemoveItemFromPack(long id)
         {
+
             packService.RemoveItemFromPack(id);
         }
 
