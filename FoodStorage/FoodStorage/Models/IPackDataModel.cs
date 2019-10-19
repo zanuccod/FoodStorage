@@ -6,7 +6,7 @@ namespace FoodStorage.Models
 {
     public interface IPackDataModel
     {
-        List<Pack> GetAllPacks();
+        List<Pack> GetPackList();
         Pack GetPack(long id);
         void InsertPack(Pack obj);
         void UpdatePack(Pack obj);

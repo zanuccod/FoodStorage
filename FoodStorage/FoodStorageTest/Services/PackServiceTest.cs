@@ -36,7 +36,7 @@ namespace FoodStorageTest.Services
             service.AddPack(item);
 
             // Act
-            var result = service.IsPackComplete(item.Id);
+            var result = service.IsPackComplete(item);
 
             // Assert
             Assert.AreEqual(expectedResult, result);
@@ -54,7 +54,7 @@ namespace FoodStorageTest.Services
             service.AddPack(item);
 
             // Act
-            service.RemoveItemFromPack(item.Id);
+            service.RemoveItemFromPack(item);
 
             // Assert
             Assert.AreEqual(1, service.GetPack(item.Id).RemainigItems);
@@ -72,7 +72,7 @@ namespace FoodStorageTest.Services
             service.AddPack(item);
 
             // Act
-            service.RemoveItemFromPack(item.Id);
+            service.RemoveItemFromPack(item);
 
             // Assert
             Assert.Null(service.GetPack(item.Id));

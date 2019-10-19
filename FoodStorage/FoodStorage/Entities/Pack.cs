@@ -21,6 +21,11 @@ namespace FoodStorage.Entities
         [JsonProperty("remaining_items")]
         public int RemainigItems { get; set; }
 
+        public bool IsComplete()
+        {
+            return TotalItems == RemainigItems;
+        }
+
         public bool Equals(Pack item)
         {
             var result = true;

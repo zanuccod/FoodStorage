@@ -19,6 +19,17 @@ namespace FoodStorage.Services
             model.InsertPack(pack);
         }
 
+        public void DeletePack(long packId)
+        {
+            model.DeletePack(packId);
+        }
+
+        public void UpdatePack(long packId, Pack pack)
+        {
+            pack.Id = packId;
+            model.UpdatePack(pack);
+        }
+
         public Pack GetPack(long packId)
         {
             return model.GetPack(packId);
@@ -26,30 +37,24 @@ namespace FoodStorage.Services
 
         public List<Pack> GetPackList()
         {
-            return model.GetAllPacks();
+            return model.GetPackList();
         }
 
-        public bool IsPackComplete(long packId)
+        public bool IsPackComplete(Pack pack)
         {
-            var pack = model.GetPack(packId);
-            return pack.TotalItems == pack.RemainigItems;
+            return pack.IsComplete();
         }
 
-        public void RemoveItemFromPack(long packId)
+        public Pack RemoveItemFromPack(Pack pack)
         {
-            var pack = model.GetPack(packId);
-            if (pack != null)
+            if (pack.RemainigItems > 1)
             {
-                if (pack.RemainigItems > 1)
-                {
-                    pack.RemainigItems--;
-                    model.UpdatePack(pack);
-                }
-                else
-                {
-                    model.DeletePack(pack.Id);
-                }
+                pack.RemainigItems--;
+                model.UpdatePack(pack);
+                return pack;
             }
+            model.DeletePack(pack.Id);
+            return null;
         }
     }
 }

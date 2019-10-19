@@ -31,7 +31,7 @@ namespace FoodStorageTest.Models
             dataModel.InsertPack(item);
 
             // Assert
-            Assert.AreEqual(1, dataModel.GetAllPacks().Count);
+            Assert.AreEqual(1, dataModel.GetPackList().Count);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace FoodStorageTest.Models
             }
 
             // Act
-            var items = dataModel.GetAllPacks();
+            var items = dataModel.GetPackList();
 
             // Assert
             Assert.AreEqual(itemCount, items.Count);
@@ -99,7 +99,7 @@ namespace FoodStorageTest.Models
             dataModel.DeletePack(item.Id);
 
             // Assert
-            Assert.AreEqual(0, dataModel.GetAllPacks().Count);
+            Assert.AreEqual(0, dataModel.GetPackList().Count);
         }
     }
 }

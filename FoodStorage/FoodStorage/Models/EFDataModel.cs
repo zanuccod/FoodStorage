@@ -25,7 +25,7 @@ namespace FoodStorage.Models
 
         #region Public Pack Methods
 
-        public List<Pack> GetAllPacks()
+        public List<Pack> GetPackList()
         {
             using var db = new EFDataContext(options);
             return db.Packs.ToList();

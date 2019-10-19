@@ -8,8 +8,10 @@ namespace FoodStorage.Services
     {
         List<Pack> GetPackList();
         void AddPack(Pack pack);
+        void DeletePack(long packId);
+        void UpdatePack(long packId, Pack pack);
         Pack GetPack(long packId);
-        void RemoveItemFromPack(long packId);
-        bool IsPackComplete(long packId);
+        Pack RemoveItemFromPack(Pack pack);
+        bool IsPackComplete(Pack pack);
     }
 }
