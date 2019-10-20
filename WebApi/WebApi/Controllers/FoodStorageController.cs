@@ -19,7 +19,7 @@ namespace WebApi.Controllers
             this.packService = packService;
         }
 
-        [HttpGet("GetPackList")]
+        [HttpGet("get-pack-list")]
         public async Task<ActionResult<List<Pack>>> GetPackList()
         {
             try
@@ -32,7 +32,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("Get/{id}")]
+        [HttpGet("get/{id}")]
         public async Task<ActionResult<Pack>> GetPack(long id)
         {
             try
@@ -49,7 +49,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("IsComplete/{id}")]
+        [HttpGet("is-complete/{id}")]
         public async Task<ActionResult<bool>> IsCompletePack(long id)
         {
             try
@@ -66,7 +66,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPut("UpdatePack/{id}")]
+        [HttpPut("update-pack/{id}")]
         public async Task<ActionResult> UpdatePack(long id, Pack pack)
         {
             try
@@ -85,7 +85,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("RemovePack/{id}")]
+        [HttpPost("remove-pack/{id}")]
         public async Task<ActionResult> RemovePack(long id)
         {
             try
@@ -104,7 +104,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpPost("AddPack")]
+        [HttpPost("add-pack")]
         public async Task<ActionResult> AddPack(Pack pack)
         {
             try
@@ -124,7 +124,7 @@ namespace WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost("RemoveItemFromPack/{id}")]
+        [HttpPost("remove-item-from-pack/{id}")]
         public async Task<ActionResult<Pack>> RemoveItemFromPack(long id)
         {
             try
