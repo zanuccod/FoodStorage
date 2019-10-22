@@ -48,8 +48,8 @@ namespace FoodStorage.Models
         public async Task UpdatePack(Pack obj)
         {
             using var db = new EFDataContext(options);
-            await Task.FromResult(db.Packs.Update(obj));
-            db.SaveChanges();
+            db.Packs.Update(obj);
+            await db.SaveChangesAsync();
         }
 
         public async Task DeletePack(long id)
