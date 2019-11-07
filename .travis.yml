@@ -7,8 +7,8 @@ dotnet: 3.0.100
 os:
   - linux
   - osx
-  - windwos 
-  
+  - windows 
+
 script:
  - dotnet restore
  - dotnet test -c Release ./FoodStorage/FoodStorageTest
