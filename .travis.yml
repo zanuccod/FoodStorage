@@ -5,4 +5,6 @@ mono: none
 dotnet: 3.0.100
 
 script:
- - dotnet test ./FoodStorage/FoodStorageTest
+ - dotnet restore
+ - dotnet test -c Release ./FoodStorage/FoodStorageTest
+ - dotnet test -c Release ./WebApi/WebApiTest
