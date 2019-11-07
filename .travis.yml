@@ -4,6 +4,11 @@ solution: FoodStorage.sln
 mono: none
 dotnet: 3.0.100
 
+os:
+  - linux
+  - osx
+  - windwos 
+  
 script:
  - dotnet restore
  - dotnet test -c Release ./FoodStorage/FoodStorageTest
