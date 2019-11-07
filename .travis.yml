@@ -4,4 +4,6 @@ solution: FoodStorage.sln
 mono: none
 dotnet: 3.0.100
 
-dotnet test FoodStorageTest
+script:
+ - dotnet restore
+ - dotnet test FoodStorageTest
