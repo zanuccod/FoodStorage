@@ -1,5 +1,6 @@
 language: csharp
 solution: FoodStorage.sln
+dist: trusty
 
 mono: none
 dotnet: 3.0.100
@@ -11,9 +12,7 @@ addons:
       secure: "4b75f20b2d7d6f837f85864beaa94a0f1638562e" # encrypted value of your token
 
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - sonar-scanner
-script:
  - dotnet restore
  - dotnet test -c Release ./FoodStorage/FoodStorageTest
  - dotnet test -c Release ./WebApi/WebApiTest
+ - sonar-scanner
