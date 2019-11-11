@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace FoodStorage.Entities
 {
-    public class Pack
+    public class Pack : IEquatable<Pack>
     {
         [JsonProperty("id")]
         [Key]
@@ -28,7 +28,10 @@ namespace FoodStorage.Entities
 
         public bool Equals(Pack item)
         {
-            if (item == null) return false;
+            if (item == null)
+            {
+                return false;
+            }
 
             var result = true;
             result &= (Id == item.Id);

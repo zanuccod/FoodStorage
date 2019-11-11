@@ -1,19 +1,19 @@
 language: csharp
 solution: FoodStorage.sln
 
-dist: trusty
+#dist: trusty
 mono: none
-#dotnet: 3.0.100
-dotnet: 2.1.500
+dotnet: 3.0.100
+#dotnet: 2.1.500
 
-addons:
-  sonarcloud:
-    organization: "zanuccod"
-    token:
-      secure: "ceea00d09b16c78f185f7452bea8d631c4ce7797" # encrypted value of your token
+#addons:
+#  sonarcloud:
+#    organization: "zanuccod"
+#    token:
+#      secure: "ceea00d09b16c78f185f7452bea8d631c4ce7797" # encrypted value of your token
 
 script:
  - dotnet restore
  - dotnet test -c Release ./FoodStorage/FoodStorageTest
  - dotnet test -c Release ./WebApi/WebApiTest
- - sonar-scanner
+# - sonar-scanner

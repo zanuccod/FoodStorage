@@ -39,7 +39,9 @@ namespace WebApi.Controllers
             {
                 var item = await packService.GetPack(id);
                 if (item != null)
+                {
                     return item;
+                }
 
                 return NotFound(id);
             }
@@ -56,7 +58,9 @@ namespace WebApi.Controllers
             {
                 var pack = await packService.GetPack(id);
                 if (pack != null)
+                {
                     return await packService.IsPackComplete(pack);
+                }
 
                 return NotFound(id);
             }
@@ -137,9 +141,9 @@ namespace WebApi.Controllers
                 }
                 return NotFound(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
     }
