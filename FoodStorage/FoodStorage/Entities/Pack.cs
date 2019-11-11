@@ -28,6 +28,8 @@ namespace FoodStorage.Entities
 
         public bool Equals(Pack item)
         {
+            if (item == null) return false;
+
             var result = true;
             result &= (Id == item.Id);
             result &= (Name.Equals(item.Name));

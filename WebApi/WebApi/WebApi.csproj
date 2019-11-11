@@ -15,4 +15,7 @@
   <ItemGroup>
     <None Remove="data\dbEFData.db" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DependencyInjection.Analyzer" Version="3.0.0.1" />
+  </ItemGroup>
 </Project>

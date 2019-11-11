@@ -29,27 +29,27 @@ namespace FoodStorage.Models
         public async Task<List<Pack>> GetPackList()
         {
             using var db = new EFDataContext(options);
-            return await db.Packs.ToListAsync();
+            return await db.Packs.ToListAsync().ConfigureAwait(true);
         }
 
         public async Task<Pack> GetPack(long id)
         {
             using var db = new EFDataContext(options);
-            return await db.Packs.FindAsync(id);
+            return await db.Packs.FindAsync(id).ConfigureAwait(true);
         }
 
         public async Task InsertPack(Pack obj)
         {
             using var db = new EFDataContext(options);
             await db.Packs.AddAsync(obj);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync().ConfigureAwait(true);
         }
 
         public async Task UpdatePack(Pack obj)
         {
             using var db = new EFDataContext(options);
             db.Packs.Update(obj);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync().ConfigureAwait(true);
         }
 
         public async Task DeletePack(long id)
@@ -57,7 +57,7 @@ namespace FoodStorage.Models
             using var db = new EFDataContext(options);
             var item = await db.Packs.FindAsync(id);
             db.Packs.Remove(item);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync().ConfigureAwait(true);
         }
 
         #endregion

@@ -17,18 +17,21 @@ namespace FoodStorage.Services
 
         public async Task AddPack(Pack pack)
         {
-            await model.InsertPack(pack);
+            await model.InsertPack(pack).ConfigureAwait(true);
         }
 
         public async Task DeletePack(long packId)
         {
-            await model.DeletePack(packId);
+            await model.DeletePack(packId).ConfigureAwait(true);
         }
 
         public async Task UpdatePack(long packId, Pack pack)
         {
-            pack.Id = packId;
-            await model.UpdatePack(pack);
+            if (pack != null)
+            {
+                pack.Id = packId;
+                await model.UpdatePack(pack).ConfigureAwait(true);
+            }
         }
 
         public Task<Pack> GetPack(long packId)
@@ -43,18 +46,21 @@ namespace FoodStorage.Services
 
         public async Task<bool> IsPackComplete(Pack pack)
         {
-            return await Task.FromResult(pack.IsComplete());
+            return pack != null ? await Task.FromResult(pack.IsComplete()).ConfigureAwait(true) : false;
         }
 
         public async Task<Pack> RemoveItemFromPack(Pack pack)
         {
-            if (pack.RemainigItems > 1)
+            if (pack != null)
             {
-                pack.RemainigItems--;
-                await model.UpdatePack(pack);
-                return pack;
+                if (pack.RemainigItems > 1)
+                {
+                    pack.RemainigItems--;
+                    await model.UpdatePack(pack).ConfigureAwait(true);
+                    return pack;
+                }
+                await model.DeletePack(pack.Id).ConfigureAwait(true);
             }
-            await model.DeletePack(pack.Id);
             return null;
         }
     }
