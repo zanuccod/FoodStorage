@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using Newtonsoft.Json;
 
 namespace FoodStorage.Entities
@@ -21,12 +22,7 @@ namespace FoodStorage.Entities
         [JsonProperty("remaining_items")]
         public int RemainigItems { get; set; }
 
-        public bool IsComplete()
-        {
-            return TotalItems == RemainigItems;
-        }
-
-        public bool Equals(Pack item)
+        public bool Equals([AllowNull] Pack item)
         {
             if (item == null)
             {
@@ -39,6 +35,11 @@ namespace FoodStorage.Entities
             result &= (TotalItems == item.TotalItems);
             result &= (RemainigItems == item.RemainigItems);
             return result;
+        }
+
+        public bool IsComplete()
+        {
+            return TotalItems == RemainigItems;
         }
     }
 }

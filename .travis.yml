@@ -10,7 +10,7 @@ addons:
   sonarcloud:
     organization: "zanuccod"
     token:
-      secure: "ceea00d09b16c78f185f7452bea8d631c4ce7797" # encrypted value of your token
+      secure: "cf00312ac3711956b9ba30c16a65cfb521ea837e"
 
 script:
  - dotnet restore
