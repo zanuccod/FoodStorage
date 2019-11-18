@@ -1,19 +1,26 @@
 language: csharp
 solution: FoodStorage.sln
 
-#dist: trusty
 mono: none
 dotnet: 3.0.100
-#dotnet: 2.1.500
 
 addons:
   sonarcloud:
-    organization: "zanuccod"
+    organization: zanuccod
     token:
-      secure: "cf00312ac3711956b9ba30c16a65cfb521ea837e"
+      secure: XFsRZ4Rm8hMywf90t3NeFpjgATImCP3ueEoDTDxdaPm2/xjVJWcR37VpISEvN1Ro6GwUhkovqVeHDTJjZhb5s0ljrFsFQKN+0e1PKBq5Ffm0z5aBZpWrZghu1zzQk91VpZXTRh26d20734sipP4ip1T4bO1rjkqTna8LKcT++gZg5/0txq7uzhkRTivxg99DnBrNMhAQvyei1inc9IJ+1lfTXvaFo+YMmuCnBJxNBjciQ43kAVJrkx1URZIuM1r9nqNFioFJf2oeySq+9oFzNjcDRIbSlskAsu9/2S7Ed1N1o4atPBtNBVTBW9i3PSVaVj7BlOp3t1yQpYQ7ldkMI/MchxTjY93NWw5FvkTRHAimzarKPcebif6TjyV65RlaR8bO2SQJ6TTwQsxr97D6hlZrWGaXoIFjR/Pix+1MjA92uJ0cMs4VxowRepEucYhNWNHovTCuMtLfgt93p5cbGLtcQPVSQIP+6bKXfcCr4p1TfqRham4jQKT+XebQlKNcm9YQxMPw6IFUOfBKYfRsRHwyw301TUMA8yRoO/g0Hq6AnkSYbUJ9Dgklf/JeyTBCXNjLwCEQ7EUTtMQ6UgOFi2pMEjh6sMeEB3fKROoUZs6UZXpeIssrhepQIe5kAnEr+OipA0s+VGnalMAbu70Dwf3rMe2jlE1bZVBP5Yjk2cA=
+
+install:
+  - dotnet tool install --global dotnet-sonarscanner
+  - dotnet tool install --global coveralls.net
+
+before_script:
+  - export PATH="$PATH:$HOME/.dotnet/tools"
 
 script:
- - dotnet restore
- - dotnet test -c Release ./FoodStorage/FoodStorageTest
- - dotnet test -c Release ./WebApi/WebApiTest
- - sonar-scanner
+  - dotnet restore
+  - dotnet sonarscanner begin /k:"zanuccod_FoodStorage" /d:sonar.cs.opencover.reportsPaths="./TestResults/TestResult.xml"
+  - dotnet build FoodStorage.sln
+  - dotnet test -c Release ./FoodStorage/FoodStorageTest /p:CollectCoverage=true /p:CoverletOutputFormat=json /p:CoverletOutput=../../TestResults/TestResult.json
+  - dotnet test -c Release ./WebApi/WebApiTest /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=../../TestResults/TestResult.xml /p:MergeWith=../../TestResults/TestResult.json
+  - dotnet sonarscanner end 
