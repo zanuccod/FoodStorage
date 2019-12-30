@@ -1,0 +1,9 @@
+image: Visual Studio 2019
+
+before_build:
+ - nuget restore
+build_script:
+  - dotnet restore
+  - dotnet build FoodStorage.sln
+  - dotnet test -c Release ./FoodStorage/FoodStorageTest
+  - dotnet test -c Release ./WebApi/WebApiTest
